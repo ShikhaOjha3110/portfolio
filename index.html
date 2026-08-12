@@ -1,523 +1,537 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shikha Ojha - .NET Developer Portfolio</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <!-- AOS CSS for scroll animations -->
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shikha Ojha — Software Development Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #0A0E13;
+    --panel: #10161D;
+    --panel-line: #1D2731;
+    --text: #E6EDF3;
+    --text-muted: #7C8B99;
+    --text-dim: #4B5866;
+    --accent: #3FE0B0;
+    --accent-dim: rgba(63,224,176,0.12);
+    --accent-line: rgba(63,224,176,0.35);
+    --warn: #FFB454;
+    --font-display: 'Space Grotesk', sans-serif;
+    --font-body: 'Inter', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important;}
+  }
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--font-body);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  a{color:inherit;text-decoration:none;}
+  ::selection{background:var(--accent-dim);color:var(--accent);}
+  .wrap{max-width:1040px;margin:0 auto;padding:0 32px;}
+
+  nav{
+    position:sticky;top:0;z-index:50;
+    background:rgba(10,14,19,0.85);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--panel-line);
+  }
+  nav .wrap{display:flex;align-items:center;justify-content:space-between;height:64px;}
+  .brand{font-family:var(--font-mono);font-size:14px;color:var(--text);display:flex;align-items:center;gap:8px;}
+  .dot{width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px var(--accent);animation:pulse 2s ease-in-out infinite;}
+  @keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.4;}}
+  .navlinks{display:flex;gap:26px;font-size:13px;color:var(--text-muted);font-family:var(--font-mono);}
+  .navlinks a{position:relative;padding-bottom:2px;}
+  .navlinks a::after{content:'';position:absolute;left:0;bottom:-2px;width:0;height:1px;background:var(--accent);transition:width .25s ease;}
+  .navlinks a:hover{color:var(--accent);}
+  .navlinks a:hover::after{width:100%;}
+  @media(max-width:760px){.navlinks{display:none;}}
+
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity .7s ease, transform .7s ease;}
+  .reveal.in{opacity:1;transform:translateY(0);}
+  .stagger.in > *{animation:fadeUp .6s ease forwards;}
+  .stagger > *{opacity:0;}
+  .stagger.in > *:nth-child(1){animation-delay:.05s;}
+  .stagger.in > *:nth-child(2){animation-delay:.15s;}
+  .stagger.in > *:nth-child(3){animation-delay:.25s;}
+  .stagger.in > *:nth-child(4){animation-delay:.35s;}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:translateY(0);}}
+
+  header.hero{padding:120px 0 80px;border-bottom:1px solid var(--panel-line);}
+  .status-line{
+    font-family:var(--font-mono);font-size:12px;color:var(--accent);
+    display:flex;align-items:center;gap:8px;margin-bottom:28px;letter-spacing:0.02em;
+    opacity:0;animation:fadeUp .6s ease forwards .1s;
+  }
+  .status-line .dot{width:6px;height:6px;}
+  h1{
+    font-family:var(--font-display);font-weight:700;
+    font-size:clamp(38px,6vw,64px);letter-spacing:-0.02em;line-height:1.05;
+    margin-bottom:18px;
+    opacity:0;animation:fadeUp .7s ease forwards .2s;
+  }
+  h1 span{color:var(--accent);}
+  .role-line{
+    font-family:var(--font-mono);font-size:15px;color:var(--text-muted);
+    margin-bottom:28px;
+    opacity:0;animation:fadeUp .6s ease forwards .35s;
+  }
+  .hero-desc{max-width:560px;color:var(--text-muted);font-size:16px;margin-bottom:36px;
+    opacity:0;animation:fadeUp .6s ease forwards .45s;
+  }
+  .hero-links{display:flex;gap:14px;flex-wrap:wrap;
+    opacity:0;animation:fadeUp .6s ease forwards .55s;
+  }
+  .btn{
+    font-family:var(--font-mono);font-size:13px;padding:11px 20px;border-radius:6px;
+    border:1px solid var(--panel-line);color:var(--text);transition:all .18s ease;
+  }
+  .btn.primary{background:var(--accent);color:#08110D;border-color:var(--accent);font-weight:600;}
+  .btn.primary:hover{background:#59e8bc;transform:translateY(-1px);}
+  .btn:not(.primary):hover{border-color:var(--accent-line);color:var(--accent);transform:translateY(-1px);}
+
+  .metrics{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:1px;
+    background:var(--panel-line);border:1px solid var(--panel-line);border-radius:8px;overflow:hidden;
+    margin-top:56px;
+  }
+  .metric{background:var(--panel);padding:20px 18px;transition:background .2s ease;}
+  .metric:hover{background:#131b23;}
+  .metric .num{font-family:var(--font-mono);font-size:26px;font-weight:600;color:var(--accent);}
+  .metric .label{font-size:11px;color:var(--text-dim);margin-top:6px;letter-spacing:0.03em;text-transform:uppercase;}
+  @media(max-width:640px){.metrics{grid-template-columns:repeat(2,1fr);}}
+
+  section{padding:80px 0;border-bottom:1px solid var(--panel-line);}
+  .eyebrow{
+    font-family:var(--font-mono);font-size:12px;color:var(--accent);
+    letter-spacing:0.08em;text-transform:uppercase;margin-bottom:14px;
+  }
+  h2{font-family:var(--font-display);font-size:clamp(26px,4vw,34px);margin-bottom:44px;letter-spacing:-0.01em;}
+
+  .about-grid{display:grid;grid-template-columns:1.3fr 1fr;gap:56px;}
+  .about-grid p{color:var(--text-muted);margin-bottom:16px;}
+  .stack-list{font-family:var(--font-mono);font-size:13px;}
+  .stack-row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--panel-line);color:var(--text-muted);transition:padding-left .2s ease, color .2s ease;}
+  .stack-row:hover{padding-left:6px;color:var(--text);}
+  .stack-row span:last-child{color:var(--text);}
+  @media(max-width:760px){.about-grid{grid-template-columns:1fr;}}
+
+  /* ---------- experience (detailed) ---------- */
+  .job{padding:32px 0;border-bottom:1px solid var(--panel-line);}
+  .job:last-child{border-bottom:none;}
+  .job-head{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px;margin-bottom:6px;}
+  .job-title{font-family:var(--font-display);font-size:20px;font-weight:600;}
+  .job-org{font-family:var(--font-mono);font-size:12.5px;color:var(--accent);margin-bottom:4px;}
+  .job-meta{font-family:var(--font-mono);font-size:12px;color:var(--text-dim);}
+  .job-context{color:var(--text-muted);font-size:14.5px;margin:12px 0 16px;max-width:680px;}
+  .job ul{list-style:none;color:var(--text-muted);font-size:14.5px;margin-bottom:14px;}
+  .job li{padding-left:18px;position:relative;margin-bottom:9px;}
+  .job li::before{content:'▸';position:absolute;left:0;color:var(--accent);}
+  .job li b{color:var(--text);font-weight:600;}
+  .job-tags{display:flex;flex-wrap:wrap;gap:6px;}
+  .job-tags span{font-family:var(--font-mono);font-size:10.5px;color:var(--text-dim);border:1px solid var(--panel-line);padding:3px 8px;border-radius:4px;}
+
+  /* ---------- projects (detailed case-study cards w/ diagram) ---------- */
+  .proj-list{display:flex;flex-direction:column;gap:22px;}
+  .case{
+    background:var(--panel);border:1px solid var(--panel-line);border-radius:12px;
+    overflow:hidden;transition:border-color .2s ease, transform .2s ease, box-shadow .2s ease;
+    position:relative;
+  }
+  .case:hover{border-color:var(--accent-line);transform:translateY(-3px);box-shadow:0 12px 30px rgba(0,0,0,0.35);}
+  .case-visual{
+    height:150px;background:
+      linear-gradient(180deg, rgba(63,224,176,0.06), transparent 70%),
+      repeating-linear-gradient(90deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px, transparent 1px, transparent 40px);
+    border-bottom:1px solid var(--panel-line);
+    display:flex;align-items:center;justify-content:center;
+    position:relative;
+  }
+  .case-visual svg{width:100%;height:100%;max-width:520px;}
+  .diag-line{stroke:var(--accent);stroke-width:1.5;fill:none;stroke-dasharray:6 4;opacity:0.55;}
+  .diag-node{fill:var(--panel);stroke:var(--accent-line);stroke-width:1.2;}
+  .diag-node.solid{fill:rgba(63,224,176,0.1);}
+  .diag-label{font-family:'JetBrains Mono',monospace;font-size:9px;fill:var(--text-dim);}
+  .case-content{padding:28px 32px 30px;}
+  .case-top{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:10px;margin-bottom:8px;}
+  .case h3{font-family:var(--font-display);font-size:21px;font-weight:600;}
+  .case-tag{font-family:var(--font-mono);font-size:10px;color:var(--accent);background:var(--accent-dim);padding:4px 10px;border-radius:20px;white-space:nowrap;height:fit-content;}
+  .case-sub{color:var(--text-dim);font-size:13px;font-family:var(--font-mono);margin-bottom:20px;}
+  .case-body{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-bottom:20px;}
+  .case-col .col-label{font-family:var(--font-mono);font-size:10.5px;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px;}
+  .case-col p{color:var(--text-muted);font-size:13.5px;}
+  .case-stats{display:flex;gap:26px;margin-bottom:18px;flex-wrap:wrap;}
+  .cstat .n{font-family:var(--font-mono);color:var(--accent);font-weight:600;font-size:20px;}
+  .cstat .l{font-size:10.5px;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.04em;}
+  .tech-tags{display:flex;flex-wrap:wrap;gap:6px;}
+  .tech-tags span{font-family:var(--font-mono);font-size:10.5px;color:var(--text-dim);border:1px solid var(--panel-line);padding:3px 8px;border-radius:4px;transition:border-color .2s ease,color .2s ease;}
+  .case:hover .tech-tags span{border-color:#26323e;}
+  @media(max-width:760px){.case-body{grid-template-columns:1fr;}}
+
+  /* ---------- certifications / achievements ---------- */
+  .cert-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+  .cert{background:var(--panel);border:1px solid var(--panel-line);border-radius:8px;padding:18px 20px;transition:border-color .2s ease, transform .2s ease;}
+  .cert:hover{border-color:var(--accent-line);transform:translateY(-2px);}
+  .cert .cert-name{font-family:var(--font-display);font-size:14.5px;font-weight:600;margin-bottom:4px;}
+  .cert .cert-issuer{font-family:var(--font-mono);font-size:11px;color:var(--text-dim);}
+  @media(max-width:760px){.cert-grid{grid-template-columns:1fr 1fr;}}
+  @media(max-width:480px){.cert-grid{grid-template-columns:1fr;}}
+
+  .ach-list{display:flex;flex-direction:column;gap:0;}
+  .ach{display:flex;gap:18px;padding:16px 0;border-bottom:1px solid var(--panel-line);}
+  .ach:last-child{border-bottom:none;}
+  .ach-mark{font-family:var(--font-mono);color:var(--accent);font-size:13px;padding-top:2px;}
+  .ach-title{font-family:var(--font-display);font-size:15px;font-weight:600;margin-bottom:3px;}
+  .ach-desc{color:var(--text-muted);font-size:13.5px;}
+
+  footer{padding:56px 0;text-align:center;}
+  footer .brand{justify-content:center;margin-bottom:18px;}
+  .foot-links{display:flex;justify-content:center;gap:24px;font-family:var(--font-mono);font-size:13px;color:var(--text-muted);margin-bottom:20px;flex-wrap:wrap;}
+  .foot-links a:hover{color:var(--accent);}
+  footer .fine{font-size:11px;color:var(--text-dim);font-family:var(--font-mono);}
+</style>
 </head>
 <body>
-    <div class="profile-container" data-aos="fade-up" data-aos-duration="1000">
-        <div class="content">
-            <h1>Shikha Ojha</h1>
-            <p>Full-Stack .NET Developer | ASP.NET MVC Expert | Driving Scalable Web Solutions with C# & Azure</p>
-            <div class="buttons">
-                <a href="#connect-contact" class="btn-primary">Get in Touch</a>
-                <a href="https://www.linkedin.com/in/shikha-ojha-engineer/" target="_blank" class="btn-secondary">LinkedIn Profile</a>
-            </div>
-        </div>
-        <div class="background-image"></div>
+
+<nav>
+  <div class="wrap">
+    <div class="brand"><span class="dot"></span>shikha.ojha</div>
+    <div class="navlinks">
+      <a href="#about">about</a>
+      <a href="#experience">experience</a>
+      <a href="#projects">projects</a>
+      <a href="#credentials">credentials</a>
+      <a href="#contact">contact</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="status-line"><span class="dot"></span> AVAILABLE — OPEN TO BACKEND / .NET ROLES</div>
+    <h1>Shikha Ojha —<br>backend systems<span>,</span> built to <span>stay up.</span></h1>
+    <div class="role-line">.NET Core · Microservices · Azure Cloud</div>
+    <p class="hero-desc">Backend engineer with 3+ years designing RESTful APIs and cloud-native systems on the .NET and Azure stack — where uptime and performance aren't optional.</p>
+    <div class="hero-links">
+      <a class="btn primary" href="mailto:shikhaojha00@gmail.com">Get in touch</a>
+      <a class="btn" href="#projects">View projects</a>
+      <a class="btn" href="https://www.hackerrank.com/profile/shushi2531" target="_blank">HackerRank ↗</a>
     </div>
 
-    <section id="profile" data-aos="fade-up" data-aos-duration="1000">
-        <h1>Passionate Developer Building Scalable Solutions</h1>
-        <div class="container">
-            <div class="left">
-                <p data-aos="fade-right" data-aos-delay="200">I'm a passionate .NET Developer with 3 years of experience in designing and developing enterprise applications using C#, .NET Core, ASP.NET, Microservices, and SQL. My expertise lies in creating scalable, high-performance systems that drive business value and deliver exceptional user experiences.</p>
-                <p data-aos="fade-right" data-aos-delay="400">I excel at optimizing database queries, ensuring secure API integrations, and implementing modern cloud solutions. With hands-on experience in Microsoft Azure, Azure DevOps, and CI/CD automation, I've successfully implemented GitHub Actions and Jenkins pipelines to streamline deployments and enhance operational efficiency across multiple projects.</p>
-                <p data-aos="fade-right" data-aos-delay="600">My technical toolkit includes REST API development, cloud computing, and Agile methodologies. I'm certified by Microsoft in Azure and Power Platform, as well as by HackerRank in C# and Software Engineering. I'm always eager to learn and leverage cutting-edge technologies to tackle complex business challenges and deliver innovative solutions.</p>
-            </div>
-            <div class="right">
-                <h2 data-aos="fade-left" data-aos-delay="100">Core Expertise</h2>
-                <ul>
-                    <li data-aos="fade-left" data-aos-delay="300"><strong>Driving</strong> high-performance web solutions with ASP.NET Core &amp; MVC</li>
-                    <li data-aos="fade-left" data-aos-delay="400"><strong>Architecting</strong> scalable Microservices for system resilience</li>
-                    <li data-aos="fade-left" data-aos-delay="500"><strong>Leveraging</strong> Microsoft Azure Cloud for optimized infrastructure</li>
-                    <li data-aos="fade-left" data-aos-delay="600"><strong>Enhancing</strong> data access and system performance through SQL optimization</li>
-                    <li data-aos="fade-left" data-aos-delay="700"><strong>Implementing</strong> end-to-end CI/CD automation for accelerated delivery</li>
-                    <li data-aos="fade-left" data-aos-delay="800"><strong>Developing</strong> secure and efficient REST APIs for seamless integration</li>
-                    <li data-aos="fade-left" data-aos-delay="900"><strong>Championing</strong> Agile/Scrum to foster collaborative and iterative development</li>
-                </ul>
-            </div>
+    <div class="metrics">
+      <div class="metric"><div class="num">99.9%</div><div class="label">API uptime delivered</div></div>
+      <div class="metric"><div class="num">40%</div><div class="label">Avg. perf improvement</div></div>
+      <div class="metric"><div class="num">3+</div><div class="label">Years in production</div></div>
+      <div class="metric"><div class="num">7</div><div class="label">Systems shipped</div></div>
+    </div>
+  </div>
+</header>
+
+<section id="about">
+  <div class="wrap reveal">
+    <div class="eyebrow">01 / About</div>
+    <div class="about-grid">
+      <div>
+        <p>I specialize in the .NET ecosystem and Azure cloud architecture — building enterprise-grade backend systems where performance and scalability aren't optional. I don't just write code; I build systems that hold up under real production load.</p>
+        <p>My core stack spans .NET Core microservices, RESTful APIs, and Azure infrastructure (App Services, Functions, SQL Database). I'm at my best untangling backend bottlenecks and migrating legacy systems to modern, cloud-native environments.</p>
+        <p>Previously at Accenture Solutions, supporting large-scale freight and logistics systems at enterprise reliability standards.</p>
+      </div>
+      <div class="stack-list">
+        <div class="stack-row"><span>Languages</span><span>C#, TypeScript</span></div>
+        <div class="stack-row"><span>Backend</span><span>.NET Core, ASP.NET MVC</span></div>
+        <div class="stack-row"><span>Architecture</span><span>Microservices, REST APIs</span></div>
+        <div class="stack-row"><span>Cloud</span><span>Azure (App Svc, Functions, SQL)</span></div>
+        <div class="stack-row"><span>Data</span><span>SQL Server, Entity Framework, Redis</span></div>
+        <div class="stack-row"><span>Frontend</span><span>ReactJS, Angular</span></div>
+        <div class="stack-row"><span>DevOps</span><span>Azure DevOps, CI/CD, GitHub Actions</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="wrap reveal">
+    <div class="eyebrow">02 / Experience</div>
+    <h2>Where I've worked, and how</h2>
+
+    <div class="job">
+      <div class="job-org">FREELANCE · REMOTE</div>
+      <div class="job-head">
+        <div class="job-title">Backend Engineer</div>
+        <div class="job-meta">JUL 2025 – DEC 2025</div>
+      </div>
+      <p class="job-context">Engaged directly by clients to design and harden backend services from the ground up — owning everything from API architecture to Azure deployment and cost control.</p>
+      <ul>
+        <li>Designed scalable backend services in <b>ASP.NET Core MVC + SQL Server</b>, supporting secure, high-performance data processing at <b>99.9% API uptime</b></li>
+        <li>Rebuilt the API layer around <b>layered architecture</b> with centralized exception handling and input validation — cut production issues <b>40%</b></li>
+        <li>Deployed and managed workloads on <b>Azure App Services and Azure SQL</b>, right-sizing compute and storage to cut infrastructure spend <b>25%</b></li>
+        <li>Applied <b>clean architecture and SOLID principles</b> with reusable service components, speeding up feature delivery <b>35%</b></li>
+      </ul>
+      <div class="job-tags"><span>ASP.NET Core</span><span>SQL Server</span><span>Azure App Services</span><span>Azure SQL</span><span>Clean Architecture</span></div>
+    </div>
+
+    <div class="job">
+      <div class="job-org">FREELANCE · REMOTE</div>
+      <div class="job-head">
+        <div class="job-title">Full-Stack Developer</div>
+        <div class="job-meta">JAN 2025 – JUN 2025</div>
+      </div>
+      <p class="job-context">Owned delivery end-to-end for client web applications — backend APIs, database performance, and the React front end consuming them.</p>
+      <ul>
+        <li>Built full-stack apps with <b>ASP.NET Core, Entity Framework, and ReactJS</b>, cutting development turnaround time <b>35%</b></li>
+        <li>Designed responsive UI components and tuned frontend performance, lifting user engagement and usability <b>40%</b></li>
+        <li>Optimized database queries, indexing, and <b>Redis caching</b>, reducing database load <b>30%</b> and improving query efficiency <b>35%</b></li>
+        <li>Deployed and hosted on <b>IIS and cloud environments</b>, improving deployment reliability and cutting production issues <b>20%</b></li>
+      </ul>
+      <div class="job-tags"><span>ASP.NET Core</span><span>Entity Framework</span><span>ReactJS</span><span>Redis</span><span>IIS</span></div>
+    </div>
+
+    <div class="job">
+      <div class="job-org">ACCENTURE SOLUTIONS · PUNE</div>
+      <div class="job-head">
+        <div class="job-title">Software Engineering Analyst</div>
+        <div class="job-meta">SEP 2021 – DEC 2023</div>
+      </div>
+      <p class="job-context">Part of a team building and maintaining enterprise applications for large-scale freight and logistics operations — systems where downtime has direct operational cost.</p>
+      <ul>
+        <li>Developed and maintained enterprise applications in <b>C#, VB.NET, and .NET Core</b>, supporting logistics systems at <b>99.9% uptime</b></li>
+        <li>Designed and optimized <b>REST and SOAP web services</b>, reducing API response times <b>20%</b> and improving scalability</li>
+        <li>Performed <b>SQL performance tuning</b>, query optimization, and indexing — cut database response time <b>35%</b>, improved query efficiency <b>40%</b></li>
+        <li>Automated <b>CI/CD pipelines</b> using Git, GitHub, Azure DevOps, and Jenkins — <b>40%</b> faster deployments, <b>30%</b> fewer manual errors</li>
+      </ul>
+      <div class="job-tags"><span>C#</span><span>.NET Core</span><span>SOAP/REST</span><span>Azure DevOps</span><span>Jenkins</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="wrap">
+    <div class="eyebrow reveal">03 / Projects</div>
+    <h2 class="reveal">Things I've built</h2>
+
+    <div class="proj-list stagger reveal">
+
+      <div class="case">
+        <div class="case-visual">
+          <svg viewBox="0 0 520 150" xmlns="http://www.w3.org/2000/svg">
+            <rect class="diag-node solid" x="20" y="60" width="90" height="34" rx="5"/>
+            <text class="diag-label" x="35" y="81">Angular UI</text>
+            <path class="diag-line" d="M110 77 H180"/>
+            <rect class="diag-node solid" x="180" y="55" width="110" height="44" rx="5"/>
+            <text class="diag-label" x="195" y="72">ASP.NET Core</text>
+            <text class="diag-label" x="195" y="86">API layer</text>
+            <path class="diag-line" d="M290 77 H360"/>
+            <rect class="diag-node" x="360" y="60" width="100" height="34" rx="5"/>
+            <text class="diag-label" x="375" y="81">Azure SQL</text>
+            <path class="diag-line" d="M235 55 V25 H100 V55" />
+            <text class="diag-label" x="140" y="18">Audit log + RBAC</text>
+          </svg>
         </div>
-    </section>
-
-    <section id="achievements" data-aos="fade-up" data-aos-duration="1000">
-        <div class="container" style="gap: 30px; text-align: justify; margin-top: -40px;">
-            <div class="content-section" style="flex: 1; padding: 0; display: flex; justify-content: flex-start; margin: 0; margin-left: auto; margin-right: auto;">
-                <div class="header" style="margin-bottom: 20px; margin-top: 10px; margin-left: auto; text-align: center;">
-                    <h1>Key Achievements That Drive Results</h1>
-                </div>
-                <!-- Achievements in a 2x2 grid -->
-                <div class="achievements-grid" style="display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: auto auto; gap: 30px; margin-bottom: 20px; margin-top: -20px;">
-                    <div class="achievement-box" data-aos="zoom-in" data-aos-delay="100">
-                        
-                        <h2>30<span style="font-size: 1rem; vertical-align: super;">%</span></h2>
-                        <h3 style="text-align: center; margin-bottom: 10px;">Performance Boost</h3>
-                        <p style="text-align: center; margin-bottom: 10px;">Enhanced system performance through optimization of .NET Core microservices</p>
-                    </div>
-                    <div class="achievement-box" data-aos="zoom-in" data-aos-delay="200">
-                        
-                        <h2>20<span style="font-size: 1rem; vertical-align: super;">%</span></h2>
-                        <h3 style="text-align: center; margin-bottom: 10px;">Faster APIs</h3>
-                        <p style="text-align: center; margin-bottom: 10px;">Reduction in response times through secure and efficient REST API</p>
-                    </div>
-                    <div class="achievement-box" data-aos="zoom-in" data-aos-delay="300">
-                        
-                        <h2>40<span style="font-size: 1rem; vertical-align: super;">%</span></h2>
-                        <h3 style="text-align: center; margin-bottom: 10px;">Deployment Speed</h3>
-                        <p style="text-align: center; margin-bottom: 10px;">Decrease in deployment time by automating CI/CD pipelines</p>
-                    </div>
-                    <div class="achievement-box" data-aos="zoom-in" data-aos-delay="400">
-                        
-                        <h2>25<span style="font-size: 1rem; vertical-align: super;">%</span></h2>
-                        <h3 style="text-align: center; margin-bottom: 10px;">Team Productivity</h3>
-                        <p style="text-align: center; margin-bottom: 10px;">Increased productivity by leading a team of 5 developers effectively</p>
-                    </div>
-                </div>
-                <div class="description" data-aos="zoom-in" data-aos-delay="500" style="font-size: 1rem; margin-right: auto; text-align: center; text-align: justify;" >
-                    These achievements demonstrate my commitment to delivering measurable business value through technical excellence. 
-                    By focusing on performance optimization, automation, and team collaboration, I've consistently exceeded project goals and contributed to organizational success.
-                    My approach combines deep technical knowledge with strong leadership skills to drive innovation and efficiency across all development initiatives.
-                </div>
-            </div>
+        <div class="case-content">
+          <div class="case-top">
+            <h3>InsightEdge</h3>
+            <span class="case-tag">ENTERPRISE ANALYTICS</span>
+          </div>
+          <div class="case-sub">Backend-driven analytics platform for enterprise operational data</div>
+          <div class="case-stats">
+            <div class="cstat"><div class="n">+50%</div><div class="l">Data availability</div></div>
+            <div class="cstat"><div class="n">+40%</div><div class="l">Faster decisions</div></div>
+            <div class="cstat"><div class="n">+50%</div><div class="l">Fewer prod issues</div></div>
+          </div>
+          <div class="case-body">
+            <div class="case-col"><div class="col-label">Challenge</div><p>Operational data lived across disconnected sources, so leadership had no real-time view into system health or business metrics.</p></div>
+            <div class="case-col"><div class="col-label">Approach</div><p>Architected an ASP.NET Core MVC backend to collect, process, and expose operational data through REST APIs, paired with Angular dashboards for live visualization.</p></div>
+            <div class="case-col"><div class="col-label">Impact</div><p>Added role-based access control and audit logging, which strengthened security posture and cut data availability delays by half.</p></div>
+          </div>
+          <div class="tech-tags"><span>Angular</span><span>ASP.NET Core MVC</span><span>Azure SQL</span><span>Azure DevOps</span><span>REST APIs</span></div>
         </div>
-    </section>
+      </div>
 
-    <section id="journey" data-aos="fade-up" data-aos-duration="1000">
-        <h1>Professional Journey</h1>
-        <div class="timeline">
-            <!--box 1-->        
-            <div class="box left-box" data-aos="slide-right" data-aos-delay="100">
-                <div class="job-title">Freelance FullStack Developer</div>
-                <div class="company-time"><strong>Self-Employed</strong> | January 2025 - June 2025</div>
-                <ul>
-                    <li>Led full-stack development of a user management web application (ASP.NET Core, ReactJS).</li>
-                    <li>Accelerated project delivery by 35%.</li>
-                    <li>Built responsive interfaces and automated deployments using GitHub Actions.</li>
-                    <li>Improved user experience and deployment speed by 50%.</li>
-                    <li>Focused on clean, reusable code and comprehensive documentation.</li>
-                </ul>
-            </div>
-            <div></div>
-            <div></div>
-            <!-- box 2-->
-            <div></div>
-            <div></div>
-            <div class="box right-box" data-aos="slide-left" data-aos-delay="200">
-                <div class="job-title">Application Development Analyst</div>
-                <div class="company-time"><strong>Accenture</strong> | December 2022 - December 2023</div>
-                <ul>
-                    <li>Developed and optimized .NET Core microservices, increasing system performance by 30%.</li>
-                    <li>Designed REST APIs, reducing response time by 20%.</li>
-                    <li>Implemented CI/CD automation, cutting deployment time by 40%.</li>
-                    <li>Optimized SQL queries, reducing database load by 35%.</li>
-                    <li>Led a team of 5 developers in an Agile environment with US-based stakeholders.</li>
-                </ul>
-            </div>
-            <!-- box 3-->
-            <div class="box left-box" data-aos="slide-right" data-aos-delay="300">
-                <div class="job-title">Application Development Associate</div>
-                <div class="company-time"><strong>Accenture</strong> | September 2021 - December 2022</div>
-                <ul>
-                    <li>Contributed to enterprise application development using .NET technologies.</li>
-                    <li>Gained hands-on experience with microservices architecture and cloud platforms.</li>
-                    <li>Applied agile methodologies while working on client projects in Hyderabad.</li>
-                </ul>
-            </div>
-            <div></div>
-            <div></div>
-            <!--box4-->
-            <div></div>
-            <div></div>
-            <div class="box right-box" data-aos="slide-left" data-aos-delay="400">
-                <div class="job-title">Early Career & Internships</div>
-                <div class="company-time"><strong>Multiple Organizations</strong> | 2019 - 2020</div>
-                <ul>
-                    <li>Completed internships at Deloitte (Technology Consultant), Internship Studio (Web Design), and ExpertsHub (ML/AI).</li>
-                    <li>Built foundational skills across diverse technology domains.</li>
-                </ul>
-            </div>
+      <div class="case">
+        <div class="case-visual">
+          <svg viewBox="0 0 520 150" xmlns="http://www.w3.org/2000/svg">
+            <rect class="diag-node solid" x="20" y="60" width="90" height="34" rx="5"/>
+            <text class="diag-label" x="30" y="81">React client</text>
+            <path class="diag-line" d="M110 77 H175"/>
+            <rect class="diag-node solid" x="175" y="45" width="110" height="34" rx="5"/>
+            <text class="diag-label" x="190" y="66">JWT auth</text>
+            <rect class="diag-node solid" x="175" y="85" width="110" height="34" rx="5"/>
+            <text class="diag-label" x="190" y="106">.NET Core API</text>
+            <path class="diag-line" d="M285 62 H350 V102 H285"/>
+            <rect class="diag-node" x="350" y="85" width="110" height="34" rx="5"/>
+            <text class="diag-label" x="368" y="106">Redis cache</text>
+          </svg>
         </div>
-    </section>
-
-    <section id="skill" style="background-color: #af833e; font-family: Georgia, sans-serif; margin-top: -30px;" data-aos="fade-up" data-aos-duration="1000">
-        <h1>Technical Skills & Expertise</h1>
-        <div class="container"  style="margin-top: 40px;">
-            <div class="skill-grid" style="display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: auto auto; gap: 80px; margin-bottom: -20px; margin-top: 10px;">
-                <div class="skill-box" data-aos="fade-left" data-aos-delay="100">
-                    <svg class="skill-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" >
-                        <circle cx="4" cy="12" r="1" fill="none" stroke="black" />
-                        <circle cx="20" cy="12" r="1" fill="none" stroke="black" />
-                        <path d="M9 8l-4 4 4 4" stroke="black" stroke-width="2" fill="none" />
-                        <path d="M15 8l4 4-4 4" stroke="black" stroke-width="2" fill="none" />
-                    </svg>
-                    <div class="skill-content" style="text-align: justify; margin-right: auto; margin-left: auto;">
-                        <div class="skill-title">Backend Development</div>
-                        <div class="skill-desc" style="text-align: justify; margin-left: auto; margin-right: auto;">
-                            Expert in C#, ASP.NET Core, ASP.NET MVC, .NET Framework, Web API, and API Integration. Proficient in
-                            building robust, scalable backend systems with microservices architecture and RESTful API design
-                            patterns.
-                        </div>
-                    </div>
-                </div>
-                <div class="skill-box" data-aos="fade-right" data-aos-delay="200">
-                    <svg class="skill-icon" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="1.5"
-                        xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                        <path d="M16 16h2a4 4 0 0 0 0-8 5 5 0 0 0-10 1A4 4 0 0 0 6 15h10z" />
-                    </svg>
-                    <div class="skill-content" style="text-align: justify; margin-left: auto; margin-right: auto;">
-                        <div class="skill-title">Cloud & DevOps</div>
-                        <div class="skill-desc" style="text-align: justify; margin-left: auto; margin-right: auto;">
-                            Hands-on experience with Microsoft Azure services, Azure DevOps, CI/CD pipelines using GitHub
-                            Actions and Jenkins. Skilled in cloud deployment and infrastructure automation.
-                        </div>
-                    </div>
-                </div>
-                <div class="skill-box" data-aos="fade-left" data-aos-delay="300">
-                    <svg class="skill-icon" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="1.5"
-                        xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                        <rect x="4" y="3" width="16" height="18" rx="2" ry="2" />
-                        <path d="M4 7h16" />
-                        <path d="M10 11h4" />
-                    </svg>
-                    <div class="skill-content" style="text-align: justify; margin-left: auto; margin-right: auto;">
-                        <div class="skill-title">Database Management</div>
-                        <div class="skill-desc" style="text-align: justify; margin-left: auto; margin-right: auto;">
-                            Advanced SQL skills including query optimization, database design, and performance tuning. Experienced in reducing
-                            database load and improving query response times significantly.
-                        </div>
-                    </div>
-                </div>
-                <div class="skill-box" data-aos="fade-right" data-aos-delay="400">
-                    <svg class="skill-icon" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="1.5"
-                        xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                        <path d="M4 16l2-5 5-2 5 2 2 5-2 5-5 2-5-2-2-5z" />
-                        <path d="M9 11h6" />
-                    </svg>
-                    <div class="skill-content" style="text-align: justify; margin-left: auto; margin-right: auto;">
-                        <div class="skill-title">Frontend Technologies</div>
-                        <div class="skill-desc" style="text-align: justify; margin-left: auto; margin-right: auto;">
-                            Proficient in ReactJS, Angular, HTML, CSS, and JavaScript for building responsive, interactive user interfaces. Experience creating modern web applications with seamless user experiences and intuitive designs.
-                        </div>
-                    </div>
-                </div>
-                <div class="skill-box" data-aos="fade-left" data-aos-delay="500">
-                    <svg class="skill-icon" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="1.5"
-                        xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                        <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
-                    </svg>
-                    <div class="skill-content" style="text-align: justify; margin-left: auto; margin-right: auto;">
-                        <div class="skill-title">Agile Methodologies</div>
-                        <div class="skill-desc" style="text-align: justify; margin-left: auto; margin-right: auto;">
-                            Strong experience working in Agile/Scrum environments, collaborating with cross-functional teams, and delivering iterative solutions that meet business requirements.
-                        </div>
-                    </div>
-                </div>
-                <div class="skill-box" data-aos="fade-right" data-aos-delay="600">
-                    <svg class="skill-icon" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="1.5"
-                        xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                        <path d="M17 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2" />
-                        <circle cx="9" cy="7" r="4" />
-                        <circle cx="17" cy="7" r="4" />
-                    </svg>
-                    <div class="skill-content" style="text-align: justify; margin-left: auto; margin-right: auto;">
-                        <div class="skill-title">Leadership & Collaboration</div>
-                        <div class="skill-desc" style="text-align: justify; margin-left: auto; margin-right: auto;">
-                            Proven ability to lead development teams, mentor junior developers, and collaborate effectively with global stakeholders to deliver high-quality software solutions.
-                        </div>
-                    </div>
-                </div>
-                <div class="skill-box" data-aos="fade-left" data-aos-delay="700" style="text-align: center;">
-                    <svg class="skill-icon" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="1.5"
-                        xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                        <circle cx="12" cy="12" r="4" />
-                        <path d="M12 2v4" />
-                        <path d="M12 18v4" />
-                        <path d="M4.93 4.93l2.83 2.83" />
-                        <path d="M16.24 16.24l2.83 2.83" />
-                        <path d="M2 12h4" />
-                        <path d="M18 12h4" />
-                        <path d="M4.93 19.07l2.83-2.83" />
-                        <path d="M16.24 7.76l2.83-2.83" />
-                    </svg>
-                    <div class="skill-content" style="text-align: justify; margin-left: auto; margin-right: auto;">
-                        <div class="skill-title">Object-Oriented Programming (OOPs)</div>
-                        <div class="skill-desc" style="text-align: justify; margin-left: auto; margin-right: auto;">
-                            Strong understanding and application of OOP principles (Encapsulation, Inheritance, Polymorphism, Abstraction), design patterns, and clean code architecture to develop maintainable and scalable software.
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="case-content">
+          <div class="case-top">
+            <h3>TaskPilot</h3>
+            <span class="case-tag">FULL-STACK PRODUCT</span>
+          </div>
+          <div class="case-sub">Smart task management & reminder app with real-time sync</div>
+          <div class="case-stats">
+            <div class="cstat"><div class="n">+60%</div><div class="l">Task completion</div></div>
+            <div class="cstat"><div class="n">+45%</div><div class="l">Daily engagement</div></div>
+            <div class="cstat"><div class="n">-50%</div><div class="l">Release failures</div></div>
+          </div>
+          <div class="case-body">
+            <div class="case-col"><div class="col-label">Challenge</div><p>Users abandoned to-do lists that didn't adapt or remind intelligently, so completion rates stayed low.</p></div>
+            <div class="case-col"><div class="col-label">Approach</div><p>Built a full-stack app on ReactJS and .NET Core with real-time updates and intelligent reminder logic, securing all endpoints with JWT authentication.</p></div>
+            <div class="case-col"><div class="col-label">Impact</div><p>Automated deployments through GitHub Actions cut release failures in half while daily engagement climbed as reminders got smarter.</p></div>
+          </div>
+          <div class="tech-tags"><span>ReactJS</span><span>.NET Core</span><span>REST APIs</span><span>JWT</span><span>Redis</span><span>GitHub Actions</span></div>
         </div>
-    </section>
+      </div>
 
-    <section id="certifications" data-aos="fade-up" data-aos-duration="1000">
-        <h1>Certifications &amp; Continuous Learning</h1>
-        <div class="container" style="gap: 30px; text-align: justify;">
-            <div class="cert-box" data-aos="zoom-in" data-aos-delay="100">
-                <div class="title-bar">
-                    <div class="icon icon-power" style=" font-size: 20px;"></></div>
-                </div>
-                <div class="cert-title">
-                    Microsoft Certified: Power Platform Fundamentals (PL-900)
-                </div>
-                <div class="cert-desc">
-                    Official Microsoft certification demonstrating expertise in Power Platform capabilities, including Power Apps, Power Automate, and Power BI for business solutions.
-                </div>
-            </div>
-
-            <div class="cert-box" data-aos="zoom-in" data-aos-delay="200">
-                <div class="title-bar">
-                    <div class="icon icon-azure" style=" font-size: 20px;"></></div>
-                </div>
-                <div class="cert-title">
-                    Microsoft Certified: Azure Fundamentals (AZ-900)
-                </div>
-                <div class="cert-desc">
-                    Official Microsoft certification validating foundational knowledge of cloud services and how those services are provided with Microsoft Azure.
-                </div>
-            </div>
-
-            <div class="cert-box" data-aos="zoom-in" data-aos-delay="300">
-                <div class="title-bar">
-                    <div class="icon icon-security" style=" font-size: 20px;"></></div>
-                </div>
-                <div class="cert-title">
-                    Microsoft Certified: Security, Compliance, and Identity Fundamentals (SC-900)
-                </div>
-                <div class="cert-desc">
-                    Official Microsoft certification demonstrating foundational knowledge of security, compliance, and identity (SCI) concepts across Microsoft Azure and Microsoft 365.
-                </div>
-            </div>
-
-            <div class="cert-box" data-aos="zoom-in" data-aos-delay="400">
-                <div class="title-bar">
-                    <div class="icon icon-data" style=" font-size: 20px;"></></div>
-                </div>
-                <div class="cert-title">
-                    Microsoft Certified: Azure Data Engineer Associate (DP-203)
-                </div>
-                <div class="cert-desc">
-                    Official Microsoft certification for implementing data solutions using Azure data services, focusing on data processing and storage.
-                </div>
-            </div>
-
-            <div class="cert-box" data-aos="zoom-in" data-aos-delay="500">
-                <div class="title-bar">
-                    <div class="icon icon-java" style=" font-size: 20px;"></></div>
-                </div>
-                <div class="cert-title">
-                    Java Programming
-                </div>
-                <div class="cert-desc">
-                    Comprehensive certification in Java programming fundamentals, object-oriented design, and application development best practices.
-                </div>
-            </div>
-
-            <div class="cert-box" data-aos="zoom-in" data-aos-delay="600">
-                <div class="title-bar">
-                    <div class="icon icon-cpp" style=" font-size: 20px;"></></div>
-                </div>
-                <div class="cert-title">
-                    C++ Programming
-                </div>
-                <div class="cert-desc">
-                    Advanced certification covering C++ programming concepts, memory management, and system-level programming techniques.
-                </div>
-            </div>
-
-            <div class="cert-box" data-aos="zoom-in" data-aos-delay="700">
-                <div class="title-bar">
-                    <div class="icon icon-db" style=" font-size: 20px;"></></div>
-                </div>
-                <div class="cert-title">
-                    SQL Certification
-                </div>
-                <div class="cert-desc">
-                    Certification demonstrating proficiency in SQL query writing, database management, and data manipulation for relational databases.
-                </div>
-            </div>
-
-            <div class="cert-box" data-aos="zoom-in" data-aos-delay="800">
-                <div class="title-bar">
-                    <div class="icon icon-csharp" style=" font-size: 20px;"></></div>
-                </div>
-                <div class="cert-title">
-                    C# Certification
-                </div>
-                <div class="cert-desc">
-                    Certification validating expertise in C# programming language, object-oriented principles, and .NET application development.
-                </div>
-            </div>
-
-            <div class="cert-box" data-aos="zoom-in" data-aos-delay="900">
-                <div class="title-bar">
-                    <div class="icon icon-python" style=" font-size: 20px;"></></div>
-                </div>
-                <div class="cert-title">
-                    Python (Basic)
-                </div>
-                <div class="cert-desc">
-                    HackerRank certification validating fundamental Python programming skills, data structures, and algorithmic problem-solving abilities.
-                </div>
-            </div>
-
-            <div class="cert-box long-cert" data-aos="zoom-in" data-aos-delay="1000">
-                <div class="title-bar">
-                    <div class="icon icon-hackerrank" style=" font-size: 20px;"></></div>
-                </div>
-                <div class="cert-title">
-                    HackerRank Software Engineer Certification
-                </div>
-                <div class="cert-desc" style="text-align: center;">
-                    HackerRank certification validating comprehensive skills in software engineering, data structures, algorithms, and problem-solving.
-                </div>
-            </div>
+      <div class="case">
+        <div class="case-visual">
+          <svg viewBox="0 0 520 150" xmlns="http://www.w3.org/2000/svg">
+            <rect class="diag-node solid" x="20" y="60" width="100" height="34" rx="5"/>
+            <text class="diag-label" x="35" y="81">Angular UI</text>
+            <path class="diag-line" d="M120 77 H190"/>
+            <rect class="diag-node solid" x="190" y="60" width="120" height="34" rx="5"/>
+            <text class="diag-label" x="205" y="81">ASP.NET Core</text>
+            <path class="diag-line" d="M310 77 H380"/>
+            <rect class="diag-node" x="380" y="60" width="100" height="34" rx="5"/>
+            <text class="diag-label" x="400" y="81">SQL</text>
+            <text class="diag-label" x="205" y="30">SLA-monitored · 90% resolved on time</text>
+          </svg>
         </div>
-        <p class="footer-text" data-aos="zoom-in" data-aos-delay="1100" style="text-align: center;">
-            My commitment to continuous learning keeps me at the forefront of technology trends. These certifications represent my dedication to mastering diverse programming languages and platforms, ensuring I can deliver innovative solutions using the most appropriate tools for each challenge.
-        </p>
-    </section>
-
-    <section id="recognition" data-aos="fade-up" data-aos-duration="1000">
-        <h1>Recognition & Competitive Achievements</h1>
-        <div class="container">
-            <div class="recognition-list">
-                <div class="recognition" data-aos="slide-right" data-aos-delay="100">
-                    <div class="icon" aria-label="Code Symbol">
-                        <svg viewBox="0 0 24 24" >
-                            <path d="M8 17l-5-5 5-5v10zm8-10v10l5-5-5-5z"/>
-                        </svg>
-                    </div>
-                    <div class="recognition-text">
-                        <h3>TechGig Code Gladiators 2020</h3>
-                        <p>Competed in prestigious national coding competition</p>
-                    </div>
-                </div>
-
-                <div class="recognition" data-aos="slide-right" data-aos-delay="200">
-                    <div class="icon" aria-label="Chat Symbol">
-                        <svg viewBox="0 0 24 24" >
-                            <path d="M2 6h20v12H6l-4 4V6z"/>
-                        </svg>
-                    </div>
-                    <div class="recognition-text">
-                        <h3>Deloitte Technology Consulting Virtual Internship</h3>
-                        <p>Gained hands-on experience in technology consulting and enterprise solutions</p>
-                    </div>
-                </div>
-
-                <div class="recognition" data-aos="slide-right" data-aos-delay="300">
-                    <div class="icon" aria-label="Bar Chart Symbol">
-                        <svg viewBox="0 0 24 24" >
-                            <path d="M7 12v7H4v-7h3zm6-8h2v15h-2V4zm-4 4h2v11h-2V8z"/>
-                        </svg>
-                    </div>
-                    <div class="recognition-text">
-                        <h3>KPMG Data Analytics Consulting Virtual Internship</h3>
-                        <p>Developed expertise in data analytics and business intelligence</p>
-                    </div>
-                </div>
-
-                <div class="recognition" data-aos="slide-right" data-aos-delay="400">
-                    <div class="icon" aria-label="Engineer Symbol">
-                        <svg viewBox="0 0 24 24" >
-                            <path d="M12 14l9-5-9-5-9 5 9 5z"></path>
-                            <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"></path>
-                            <path d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"></path>
-                        </svg>
-                    </div>
-                    <div class="recognition-text">
-                        <h3>National Engineering Olympiad 3.0</h3>
-                        <p>Recognized for outstanding performance in national-level engineering competition</p>
-                    </div>
-                </div>
-
-                <div class="recognition" data-aos="slide-right" data-aos-delay="500">
-                    <div class="icon" aria-label="Certificate Symbol">
-                        <svg viewBox="0 0 24 24" >
-                            <path d="M4 4h16v12H4V4zm2 2v8h12V6H6z"/>
-                        </svg>
-                    </div>
-                    <div class="recognition-text">
-                        <h3>Google Digital Unlocked</h3>
-                        <p>Completed Google's digital marketing and technology certification program</p>
-                    </div>
-                </div>
-            </div>
-            <div class="description" data-aos="slide-left" data-aos-delay="200" style="align-content: center; text-align: justify;">
-                <p>These achievements highlight my dedication to continuous learning and practical application in the technology field. Participating in national competitions and completing virtual internships with industry leaders like Deloitte and KPMG has significantly sharpened my technical acumen, analytical skills, and ability to contribute to real-world projects.</p>
-                <p>My involvement in these programs and competitions demonstrates a proactive approach to professional development, covering key areas such as software development, data analytics, and digital marketing. These experiences have been instrumental in shaping my problem-solving methodologies and my commitment to delivering innovative and effective solutions.</p>
-            </div>
+        <div class="case-content">
+          <div class="case-top">
+            <h3>Chevron Web Application</h3>
+            <span class="case-tag">CLIENT PLATFORM</span>
+          </div>
+          <div class="case-sub">Support-facing web app with SLA-bound reliability targets</div>
+          <div class="case-stats">
+            <div class="cstat"><div class="n">-20%</div><div class="l">App latency</div></div>
+            <div class="cstat"><div class="n">+40%</div><div class="l">User experience</div></div>
+            <div class="cstat"><div class="n">90%</div><div class="l">SLA cases resolved</div></div>
+          </div>
+          <div class="case-body">
+            <div class="case-col"><div class="col-label">Challenge</div><p>Slow API calls and unoptimized queries were dragging down page responsiveness and support turnaround.</p></div>
+            <div class="case-col"><div class="col-label">Approach</div><p>Implemented a scalable Angular frontend integrated with an ASP.NET Core backend, then reworked API calls and database queries for efficiency.</p></div>
+            <div class="case-col"><div class="col-label">Impact</div><p>Cut latency 20% and resolved 90% of high-priority support cases within SLA, backed by clear documentation practices.</p></div>
+          </div>
+          <div class="tech-tags"><span>Angular</span><span>ASP.NET Core MVC</span><span>SQL</span><span>Azure DevOps</span></div>
         </div>
-    </section>
+      </div>
 
-    <section id="education" data-aos="fade-up" data-aos-duration="1000">
-        <h1>Education</h1>
-        <div class="card" data-aos="zoom-in" data-aos-delay="100">
-            <div class="icon-container">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M12 14l9-5-9-5-9 5 9 5z"></path>
-                    <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"></path>
-                    <path d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"></path>
-                </svg>
-            </div>
-            <div class="degree">Bachelor of Technology in Computer Science & Engineering</div>
-            <div class="institute">SAGAR INSTITUTE OF SCIENCE & TECHNOLOGY (SISTEC), GANDHI NAGAR</div>
-            <div class="years">2017 - 2021</div>
-            <div class="description">
-                Acquired a robust foundation in software development, algorithms, data structures, and system design. Spearheaded and contributed to hands-on projects, applying theoretical knowledge to real-world challenges and preparing for a dynamic career in professional software engineering.
-                <b>My academic journey provided an invaluable theoretical foundation complemented by practical skills crucial for the technology industry.</b> The rigorous curriculum, coupled with applied projects, equipped me with both deep technical expertise and essential professional soft skills, fostering a collaborative approach to software development.
-            </div>
+      <div class="case">
+        <div class="case-visual">
+          <svg viewBox="0 0 520 150" xmlns="http://www.w3.org/2000/svg">
+            <rect class="diag-node solid" x="20" y="20" width="90" height="30" rx="5"/>
+            <text class="diag-label" x="30" y="39">Svc: Booking</text>
+            <rect class="diag-node solid" x="20" y="60" width="90" height="30" rx="5"/>
+            <text class="diag-label" x="30" y="79">Svc: Inventory</text>
+            <rect class="diag-node solid" x="20" y="100" width="90" height="30" rx="5"/>
+            <text class="diag-label" x="30" y="119">Svc: Payments</text>
+            <path class="diag-line" d="M110 35 H190 V75 H110 M110 75 H190 M110 115 H190 V75"/>
+            <rect class="diag-node" x="190" y="58" width="110" height="34" rx="5"/>
+            <text class="diag-label" x="205" y="79">WCF gateway</text>
+            <path class="diag-line" d="M300 75 H370"/>
+            <rect class="diag-node" x="370" y="58" width="110" height="34" rx="5"/>
+            <text class="diag-label" x="385" y="79">SQL Server</text>
+            <text class="diag-label" x="380" y="20">200 concurrent users</text>
+          </svg>
         </div>
-        <p class="bottom-text" data-aos="fade-left" data-aos-delay="15">
-            My academic journey provided an invaluable theoretical foundation complemented by practical skills crucial for the technology industry. The rigorous curriculum, coupled with applied projects, equipped me with both deep technical expertise and essential professional soft skills, fostering a collaborative approach to software development.
-        </p>
-    </section>
-
-    <section id="connect-contact" class="connect-contact" data-aos="fade-up" data-aos-duration="1000">
-        <div class="header-background"></div>
-        <div class="container">
-            <div class="left">
-                <h1>Let's Connect &amp; Innovate Together</h1>
-                <p>
-                    I'm actively seeking opportunities in .NET Development, Backend Engineering, and Cloud Solutions where I can leverage my expertise to drive innovation and deliver exceptional results. With a proven track record of optimizing system performance, implementing efficient CI/CD pipelines, and leading successful development teams, I'm ready to contribute to your organization's success.
-                </p>
-                <p>
-                    Whether you're looking for a skilled developer to architect scalable microservices, optimize cloud infrastructure, or lead technical initiatives, I bring the technical expertise, leadership experience, and passion for innovation needed to exceed expectations.
-                </p>
-                <p>
-                    I'm particularly interested in challenging projects that involve cutting-edge technologies, complex problem-solving, and opportunities to make a meaningful impact. Let's explore how we can collaborate to build innovative solutions that transform businesses and delight users.
-                </p>
-            </div>
-            <div class="right">
-                <h3>Get in Touch</h3>
-                <p><strong>Email:</strong><br /><a href="mailto:shikhaojha00@gmail.com">shikhaojha00@gmail.com</a></p>
-                <p><strong>LinkedIn:</strong><br /><a href="https://www.linkedin.com/in/shikha-ojha-b787b81aa/" target="_blank" rel="noopener noreferrer">Connect with me</a></p>
-                <p><strong>Location:</strong><br />Bhopal, Madhya Pradesh, India</p>
-            </div>
+        <div class="case-content">
+          <div class="case-top">
+            <h3>Hotel Reservation System</h3>
+            <span class="case-tag">MICROSERVICES</span>
+          </div>
+          <div class="case-sub">Enterprise-grade booking engine with concurrent user handling</div>
+          <div class="case-stats">
+            <div class="cstat"><div class="n">200</div><div class="l">Concurrent users</div></div>
+            <div class="cstat"><div class="n">-40%</div><div class="l">Response time</div></div>
+            <div class="cstat"><div class="n">0</div><div class="l">Degradation at peak</div></div>
+          </div>
+          <div class="case-body">
+            <div class="case-col"><div class="col-label">Challenge</div><p>Booking systems break under concurrent demand — double-bookings and slow filtering were the risks to design around.</p></div>
+            <div class="case-col"><div class="col-label">Approach</div><p>Engineered a microservices architecture on ASP.NET Core and SQL Server, with advanced filtering and real-time availability handling.</p></div>
+            <div class="case-col"><div class="col-label">Impact</div><p>Held response times steady for 200 concurrent users with no performance degradation, backed by strict data validation and security protocols.</p></div>
+          </div>
+          <div class="tech-tags"><span>ASP.NET Core</span><span>SQL Server</span><span>WCF</span><span>Bootstrap</span><span>Microservices</span></div>
         </div>
-    </section>
+      </div>
 
-    <footer>
-        <div class="container">
-            <p>&copy; 2023 Shikha Ojha. All rights reserved.</p>
-        </div>
-    </footer>
+    </div>
+  </div>
+</section>
 
-    <!-- AOS JS for scroll animations -->
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script>
-        AOS.init({
-            duration: 1000,
-            once: false, // Changed to false: Animations repeat on every scroll into view
-            
-        });
-    </script>
+<section id="credentials">
+  <div class="wrap reveal">
+    <div class="eyebrow">04 / Certifications</div>
+    <h2>Verified credentials</h2>
+    <div class="cert-grid">
+      <div class="cert"><div class="cert-name">Azure Fundamentals (AZ-900)</div><div class="cert-issuer">Microsoft</div></div>
+      <div class="cert"><div class="cert-name">Power Platform Fundamentals (PL-900)</div><div class="cert-issuer">Microsoft</div></div>
+      <div class="cert"><div class="cert-name">Security, Compliance & Identity Fundamentals (SC-900)</div><div class="cert-issuer">Microsoft</div></div>
+      <div class="cert"><div class="cert-name">C# & Software Engineer</div><div class="cert-issuer">HackerRank</div></div>
+      <div class="cert"><div class="cert-name">Database Design</div><div class="cert-issuer">NPTEL</div></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap reveal">
+    <div class="eyebrow">05 / Achievements</div>
+    <h2>Beyond the day job</h2>
+    <div class="ach-list">
+      <div class="ach">
+        <div class="ach-mark">▸</div>
+        <div><div class="ach-title">Google Skills Arcade Certification Zone — Top Global Participant</div><div class="ach-desc">Ranked among top global participants, Jan 2026.</div></div>
+      </div>
+      <div class="ach">
+        <div class="ach-mark">▸</div>
+        <div><div class="ach-title">Google Code Jam — Round 1A Qualifier</div><div class="ach-desc">Ranked top globally for problem-solving and development skills.</div></div>
+      </div>
+      <div class="ach">
+        <div class="ach-mark">▸</div>
+        <div><div class="ach-title">Walmart USA — Advanced Software Engineering (Forage)</div><div class="ach-desc">Applied software engineering concepts to backend systems, APIs, and performance.</div></div>
+      </div>
+      <div class="ach">
+        <div class="ach-mark">▸</div>
+        <div><div class="ach-title">Deloitte Technology Consultant Virtual Internship (Forage)</div><div class="ach-desc">Digital transformation, emerging technologies, and enterprise technology advisory.</div></div>
+      </div>
+      <div class="ach">
+        <div class="ach-mark">▸</div>
+        <div><div class="ach-title">KPMG Data Analytics Consultant Virtual Internship (Forage)</div><div class="ach-desc">Data analysis, visualization, business insights, and database technologies.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="wrap">
+    <div class="brand" style="justify-content:center;"><span class="dot"></span>shikha.ojha</div>
+    <div class="foot-links">
+      <a href="mailto:shikhaojha00@gmail.com">Email</a>
+      <a href="https://www.linkedin.com/in/shikha-ojha-engineer/" target="_blank">LinkedIn ↗</a>
+      <a href="https://github.com/ShikhaOjha3110" target="_blank">GitHub ↗</a>
+      <a href="tel:+918839166306">+91 88391 66306</a>
+    </div>
+    <div class="fine">Bhopal, Madhya Pradesh, India · Open to on-site / hybrid / remote</div>
+  </div>
+</footer>
+
+<script>
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, {threshold:0.15});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+
 </body>
-
 </html>
